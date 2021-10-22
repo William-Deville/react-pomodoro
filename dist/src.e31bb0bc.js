@@ -29585,29 +29585,28 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Timer = function Timer(props) {
-  var _props$initialMinute = props.initialMinute,
-      initialMinute = _props$initialMinute === void 0 ? 1 : _props$initialMinute,
-      _props$initialSeconds = props.initialSeconds,
-      initialSeconds = _props$initialSeconds === void 0 ? 0 : _props$initialSeconds;
-  (0, _react.useEffect)(function () {
-    var myInterval = setInterval(function () {
-      if (props.seconds > 0) {
-        props.setSeconds(props.seconds - 1);
-      }
-
-      if (props.seconds === 0) {
-        if (props.minutes === 0) {
-          clearInterval(myInterval);
-        } else {
-          props.setMinutes(props.minutes - 1);
-          props.setSeconds(59);
+  if (props.pause === false) {
+    (0, _react.useEffect)(function () {
+      var myInterval = setTimeout(function () {
+        if (props.seconds > 0) {
+          props.setSeconds(props.seconds - 1);
         }
-      }
-    }, 1000);
-    return function () {
-      clearInterval(myInterval);
-    };
-  });
+
+        if (props.seconds === 0) {
+          if (props.minutes === 0) {
+            clearTimeout(myInterval);
+          } else {
+            props.setMinutes(props.minutes - 1);
+            props.setSeconds(59);
+          }
+        }
+      }, 1000);
+      return function () {
+        clearTimeout(myInterval);
+      };
+    });
+  }
+
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "timer"
   }, /*#__PURE__*/_react.default.createElement("p", {
@@ -29655,6 +29654,16 @@ var Buttons = function Buttons(props) {
     props.setSeconds(0);
   };
 
+  var startPause = function startPause() {
+    if (props.pause === true) {
+      props.setPause(false);
+    } else {
+      props.setPause(true);
+    }
+
+    console.log(props.pause);
+  };
+
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "buttons"
   }, /*#__PURE__*/_react.default.createElement("button", {
@@ -29666,7 +29675,10 @@ var Buttons = function Buttons(props) {
   }, " - "), /*#__PURE__*/_react.default.createElement("button", {
     id: "timer-refresh",
     onClick: refreshTimer
-  }, " Refresh "), /*#__PURE__*/_react.default.createElement("button", null, " Start "));
+  }, " Refresh "), /*#__PURE__*/_react.default.createElement("button", {
+    id: "timer-startpause",
+    onClick: startPause
+  }, " Start / Pause "));
 };
 
 var _default = Buttons;
@@ -29719,6 +29731,11 @@ var App = function App() {
       seconds = _useState6[0],
       setSeconds = _useState6[1];
 
+  var _useState7 = (0, _react.useState)(true),
+      _useState8 = _slicedToArray(_useState7, 2),
+      pause = _useState8[0],
+      setPause = _useState8[1];
+
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "App"
   }, /*#__PURE__*/_react.default.createElement("h1", null, "POMODORO"), /*#__PURE__*/_react.default.createElement("p", null, "Focus"), /*#__PURE__*/_react.default.createElement(_Timer.default, {
@@ -29726,12 +29743,16 @@ var App = function App() {
     minutes: minutes,
     setMinutes: setMinutes,
     seconds: seconds,
-    setSeconds: setSeconds
+    setSeconds: setSeconds,
+    pause: pause,
+    setPause: setPause
   }), /*#__PURE__*/_react.default.createElement(_Buttons.default, {
     minutes: minutes,
     setMinutes: setMinutes,
     seconds: seconds,
-    setSeconds: setSeconds
+    setSeconds: setSeconds,
+    pause: pause,
+    setPause: setPause
   }));
 };
 
@@ -29777,7 +29798,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63053" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51337" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
