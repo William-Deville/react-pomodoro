@@ -17,6 +17,7 @@ const App = () => {
             <div className="App">
                 <h1>POMODORO</h1>
                 <p>Focus</p>
+                <p>modif netlify test</p>
                 <Timer timerLengthInSeconds = {timerLengthInSeconds} minutes = {minutes} setMinutes = {setMinutes} seconds = {seconds} setSeconds = {setSeconds} pause = {pause} setPause = {setPause}  />
                 <Buttons minutes = {minutes} setMinutes = {setMinutes} seconds = {seconds} setSeconds = {setSeconds} pause = {pause} setPause = {setPause}  />
             </div>

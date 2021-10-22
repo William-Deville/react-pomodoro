@@ -29738,7 +29738,7 @@ var App = function App() {
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "App"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, "POMODORO"), /*#__PURE__*/_react.default.createElement("p", null, "Focus"), /*#__PURE__*/_react.default.createElement(_Timer.default, {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, "POMODORO"), /*#__PURE__*/_react.default.createElement("p", null, "Focus"), /*#__PURE__*/_react.default.createElement("p", null, "modif netlify test"), /*#__PURE__*/_react.default.createElement(_Timer.default, {
     timerLengthInSeconds: timerLengthInSeconds,
     minutes: minutes,
     setMinutes: setMinutes,
